@@ -40,9 +40,7 @@ public class TodoItem
     public bool IsDone { get; set; }
 }
 Agrega el DbContext TodoContext.cs:
-csharp
-Copiar
-Editar
+
 using Microsoft.EntityFrameworkCore;
 
 public class TodoContext : DbContext
@@ -53,14 +51,12 @@ public class TodoContext : DbContext
 }
 Configura el contexto en Program.cs:
 csharp
-Copiar
-Editar
+
 builder.Services.AddDbContext<TodoContext>(options =>
     options.UseInMemoryDatabase("TodoList")); // o UseMySQL(...) si deseas MySQL
 Crea el controlador TodoController.cs:
 csharp
-Copiar
-Editar
+
 [ApiController]
 [Route("api/[controller]")]
 public class TodoController : ControllerBase
@@ -115,13 +111,11 @@ Instala HttpClient
 En Program.cs agrega:
 
 csharp
-Copiar
-Editar
+
 builder.Services.AddHttpClient();
 Crea la página Pages/Index.cshtml.cs:
 csharp
-Copiar
-Editar
+
 public class IndexModel : PageModel
 {
     private readonly IHttpClientFactory _clientFactory;
@@ -143,8 +137,7 @@ public class IndexModel : PageModel
 }
 En Pages/Index.cshtml:
 html
-Copiar
-Editar
+
 @page
 @model IndexModel
 
@@ -171,15 +164,13 @@ Asegúrate de que el puerto del backend esté correcto en la URL del frontend.
 Abre la consola de NuGet (o usa el administrador de paquetes en Visual Studio) y ejecuta:
 
 bash
-Copiar
-Editar
+
 Install-Package Pomelo.EntityFrameworkCore.MySql
 Este paquete es una de las opciones más populares y bien mantenidas para MySQL en .NET.
 
 2. ⚙️ Configurar la cadena de conexión en appsettings.json
 json
-Copiar
-Editar
+
 {
   "ConnectionStrings": {
     "DefaultConnection": "server=localhost;port=3306;database=todo_db;user=root;password=TU_CONTRASEÑA;"
@@ -187,8 +178,7 @@ Editar
 }
 3. 🧠 Modificar Program.cs para usar MySQL
 csharp
-Copiar
-Editar
+
 builder.Services.AddDbContext<TodoContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -198,15 +188,13 @@ builder.Services.AddDbContext<TodoContext>(options =>
 Puedes ejecutar esto desde tu cliente MySQL (MySQL Workbench, DBeaver o línea de comandos):
 
 sql
-Copiar
-Editar
+
 CREATE DATABASE todo_db;
 5. 🧱 Crear e instalar la base de datos desde EF Core (Migraciones)
 Desde la Consola del Administrador de Paquetes de Visual Studio:
 
 bash
-Copiar
-Editar
+
 Add-Migration InitialCreate
 Update-Database
 Esto creará las tablas automáticamente en MySQL.
